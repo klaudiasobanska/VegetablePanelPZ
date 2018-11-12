@@ -1,0 +1,235 @@
+.allBackground{
+    background: RGB(222, 225, 227);
+}
+#clientGrid {
+    position:absolute;
+    top:21%;
+    left:5%;
+    right:5%;
+    width: 1350px;
+    background-color: RGB(255,255,255);
+    /*border-style: groove;
+    border: 1px solid RGBA(	136, 153, 168,.5);*/
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.1);
+}
+
+#productGrid{
+    position:absolute;
+    top:21%;
+    left:5%;
+    right:5%;
+    width: 1350px;
+    background-color: RGB(255,255,255);
+    /*border-style: groove;
+    border: 1px solid RGBA(	136, 153, 168,.5);*/
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.1);
+}
+
+#leftPanel{
+    position:absolute;
+    top:21%;
+    right:3%;
+    width: 65%;
+    bottom: 5%;
+}
+
+
+#documentGridContainer{
+    position:absolute;
+    background-color: RGB(255,255,255);
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.1);
+    border: 1px solid RGBA(	136, 153, 168,.6);
+    width: 100%;
+    height: 100%;
+}
+#documentGrid{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    height: 90%;
+
+}
+
+#menuButtonContainer{
+    position:absolute;
+    top:14%;
+    right:3%;
+    width: 65%;
+}
+
+#addDocumentButton {
+    position: absolute;
+    height: 35px;
+    width: 45px;
+    left: 0;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.1);
+}
+
+#editDocumentButton{
+    position: absolute;
+    height: 35px;
+    width: 45px;
+    left: 5%;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.1);
+}
+
+#deleteDocumentButton{
+    position: absolute;
+    height: 35px;
+    width: 45px;
+    left: 10%;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.1);
+}
+
+#documentDateBox{
+    position: absolute;
+    width: 60px;
+    height: 35px;
+    right: 0;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.1);
+
+}
+
+
+#warehouseListContainer{
+    position:absolute;
+    top:21%;
+    left:3%;
+    bottom:5%;
+    background-color: RGB(255,255,255);
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.1);
+    border: 1px solid RGBA(	136, 153, 168,.6);
+    width: 25%;
+}
+
+#warehouseList{
+    height: 94%;
+    position: absolute;
+    left:1%;
+    right: 1%;
+    top:1%;
+    bottom: 1%;
+}
+
+#searchWarehouse{
+    position: absolute;
+    left:1%;
+    right: 1%;
+    width: 98%;
+    bottom: 1%;
+}
+
+
+#searchBox{
+    width: 400px;
+    height: 35px;
+    top:14%;
+    right:7%;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.1);
+}
+
+
+
+#addButton {
+    top:14%;
+    left:5%;
+    position:absolute;
+    height: 35px;
+    width: 40px;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.1);
+}
+
+#editButton {
+    top:14%;
+    left:8%;
+    position:absolute;
+    height: 35px;
+    width: 40px;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.1);
+}
+
+#deleteButton {
+    top:14%;
+    left:11%;
+    position:absolute;
+    height: 35px;
+    width: 40px;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.1);
+}
+
+#buttonContainer{
+    margin-bottom: 20px;
+    margin-top: 15px;
+}
+
+#menuContainer{
+    background-color: RGB(255,255,255);
+    position: absolute;
+    width: 100%;
+    height: 60px;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.1);
+
+}
+#panelMenu{
+    position: absolute;
+    right: 7%;
+    font-size: medium;
+
+}
+
+.dx-menu-item{
+    padding: 13px 10px 12px 10px;
+    color: crimson;
+
+}
+
+
+#chartContainer{
+    position: absolute;
+    top:14%;
+    left: 7%;
+    background-color: RGB(255,255,255);
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.1);
+    height: 80%;
+    width: 45%;
+
+}
+#chartOne{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    height: 90%;
+}
+
+#chart2Container{
+    position: absolute;
+    top:14%;
+    right: 7%;
+    background-color: RGB(255,255,255);
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.1);
+    height: 80%;
+    width: 40%;
+}
+
+#chartTwo, #chartThree, #chartFour{
+    width: 90%;
+    height: 33%;
+}
+
+
+
+
+
+
+
+
+
+
+
+

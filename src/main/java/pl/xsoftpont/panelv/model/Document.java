@@ -42,4 +42,7 @@ public class Document implements Serializable {
     @Column(name = "doc_price")
     private BigDecimal docPrice;
 
+    @Column(name = "vegetable_centre_id")
+    private Long vegetableCentreId;
+
 }

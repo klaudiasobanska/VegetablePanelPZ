@@ -1,6 +1,88 @@
-$(function () {
-    showMenu(1);
 
+var menuData = [{
+    id: 1,
+    name: "Home"
+}, {
+    id: 2,
+    name: "Magazyny"
+
+}, {
+    id: 3,
+    name: "Produkty"
+}, {
+    id: 4,
+    name: "Dostawcy"
+}, {
+    id: 5,
+    name: "Farmerzy"
+},{
+    id:6,
+    name: "Klienci"
+},{
+    id:7,
+    name: "Kontrakty",
+    items: [{
+        id:8,
+        name: "Rolnik"
+    },{
+        id:9,
+        name: "Klient"
+    }]
+}];
+
+
+function showMenu(page) {
+
+    /*if (page <= 7 ){
+
+    }else{
+        menuData[page - 1].selected = true;
+    }*/
+
+   // menuData[page -1].selected = true
+
+    $("#panelMenu").dxMenu({
+        dataSource: menuData,
+        displayExpr: "name",
+        selectionMode: "single",
+        selectionByClick: true,
+        onItemClick: function (data) {
+            switch (data.itemData.id) {
+                case 2:
+                    location.href = './warehouse';
+                    break;
+                case 3:
+                    location.href = './product';
+                    break;
+                case 4:
+                    location.href = './provider';
+                    break;
+                case 5:
+                    location.href = './farmer';
+                    break;
+                case 6:
+                    location.href = './client';
+                    break;
+                case 7:
+                    break;
+                case 8:
+                    location.href = './contractF';
+                    break;
+                case 9:
+                    location.href = './contractC';
+                    break;
+                case 1:
+                    location.href = './home';
+
+            }
+        }
+
+    })
+};
+
+$(function loadPanel() {
+
+    showMenu(1);
     var source = new DevExpress.data.DataSource({
         load: function () {
             $('#chartOne').dxChart('instance').showLoadingIndicator();
@@ -109,49 +191,5 @@ $(function () {
 
         }]
     });
-});
+})
 
-var menuData = [{
-    id: 1,
-    name: "Home"
-}, {
-    id: 2,
-    name: "Magazyny"
-
-}, {
-    id: 3,
-    name: "Produkty"
-}, {
-    id: 4,
-    name: "Dostawcy"
-}];
-
-function showMenu(page) {
-
-    menuData[page - 1].selected = true;
-
-    $("#panelMenu").dxMenu({
-        dataSource: menuData,
-        displayExpr: "name",
-        selectionMode: "single",
-        selectionByClick: true,
-        onItemClick: function (data) {
-            switch (data.itemData.id) {
-                case 2:
-                    location.href = './warehouse';
-                    break;
-                case 3:
-                    location.href = './product';
-                    break;
-                case 4:
-                    location.href = './client';
-
-                    break;
-                default:
-                    location.href = './home';
-
-            }
-        }
-
-    })
-};

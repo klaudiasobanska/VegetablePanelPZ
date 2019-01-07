@@ -44,8 +44,9 @@ public class WarehouseController {
     }
 
     @GetMapping("/warehouse/search")
-    public List<Warehouse> getWarehouse(@RequestParam("param") String param){
-        List<Warehouse> w = warehouseRepository.searchWarehouse("%" + param + "%");
+    public List<Warehouse> getWarehouse(@RequestParam("param") String param,
+                                        @RequestParam("centreId") Long centreId){
+        List<Warehouse> w = warehouseRepository.searchWarehouse("%" + param + "%", centreId);
         return w;
     }
 }

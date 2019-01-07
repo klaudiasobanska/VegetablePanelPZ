@@ -7,7 +7,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -23,10 +26,10 @@ public class ContractClient implements Serializable {
     private Long id;
 
     @Column(name = "client_id")
-    private Integer clientId;
+    private Long clientId;
 
     @Column(name = "vegetable_centre_id")
-    private Integer vegetableCentreId;
+    private Long vegetableCentreId;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Poland")
     @Column(name = "start_date")
@@ -40,12 +43,32 @@ public class ContractClient implements Serializable {
     private Integer amount;
 
     @Column(name = "product_id")
-    private Integer productId;
+    private Long productId;
 
     @Column(name = "provider_id")
-    private Integer providerId;
+    private Long providerId;
 
     @Column(name = "status")
     private Integer status;
+
+    @Column(name = "price")
+    private Integer price;
+
+    @Transient
+    private String clientName;
+
+    @Transient
+    private String statusName;
+
+    @Transient
+    private String productName;
+
+    @Transient
+    private String providerName;
+
+    @Transient
+    private String vegetableCentreName;
+
+
 
 }

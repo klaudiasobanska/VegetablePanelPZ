@@ -23,10 +23,10 @@ public class ContractFarmer implements Serializable {
     private Long id;
 
     @Column(name = "farmer_id")
-    private Integer farmerId;
+    private Long farmerId;
 
     @Column(name = "vegetable_centre_id")
-    private Integer vegetableCentreId;
+    private Long vegetableCentreId;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Poland")
     @Column(name = "start_date")
@@ -40,13 +40,30 @@ public class ContractFarmer implements Serializable {
     private Integer amount;
 
     @Column(name = "product_id")
-    private Integer productId;
+    private Long productId;
 
     @Column(name = "provider_id")
-    private Integer providerId;
+    private Long providerId;
 
     @Column(name = "status")
     private Integer status;
+
+    @Column(name = "price")
+    private Integer price;
+
+    @Transient
+    private String farmerName;
+
+    @Transient
+    private String statusName;
+
+    @Transient
+    private String productName;
+
+    @Transient
+    private String providerName;
+    @Transient
+    private String vegetableCentreName;
 
 
 }

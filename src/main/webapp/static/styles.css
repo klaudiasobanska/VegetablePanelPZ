@@ -1,7 +1,7 @@
 .allBackground{
     background: RGB(222, 225, 227);
 }
-#clientGrid {
+#clientGrid, #farmerGrid, #providerGrid, #contractCGrid, #contractFGrid  {
     position:absolute;
     top:21%;
     left:5%;
@@ -186,6 +186,16 @@
 
 }
 
+#chartContainerCF{
+    position: absolute;
+    top:14%;
+    left: 7%;
+    right: 7%;
+    background-color: RGB(255,255,255);
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.1);
+    height: 80%;
+    width: 85%;
+}
 
 #chartContainer{
     position: absolute;
@@ -222,6 +232,51 @@
     height: 33%;
 }
 
+#loginContainer{
+    background-color: RGB(255,255,255);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    height: 50%;
+    width: 30%;
+}
+
+
+#loginFormContainer {
+    padding: 50px 50px 25px 50px;
+    margin-left:auto;
+    margin-right: auto;
+    max-width: 500px;
+    text-align:center;
+    font-family: "Arial";
+
+}
+
+#loginForm{
+    margin:5% 5% 0 5%
+}
+
+#loginText{
+    margin-top:15%;
+}
+
+#loginButton{
+    margin-top:5%;
+    font-size: medium;
+    width: 150px;
+    height: 40px;
+    background-color: #f05b41;
+    font-weight: bold;
+    border-color: #f05b41;
+
+}
+
+#loginButton:hover{
+    background-color: #eb3313;
+}
 
 
 

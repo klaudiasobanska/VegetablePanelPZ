@@ -41,4 +41,7 @@ public class Product implements Serializable {
 
     @Transient
     private String vatName;
+
+    @Column(name = "vegetable_centre_id")
+    private Long vegetableCentreId;
 }

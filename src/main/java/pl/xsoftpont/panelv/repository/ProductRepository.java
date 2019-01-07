@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Repository;
 import pl.xsoftpont.panelv.model.Product;
 
@@ -18,10 +19,14 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findAll();
 
-    @Query(value = "select * from products p where ((p.name like :param) or (p.index like :param)) /*or (p.price like :param) or (c.amount like :param))*/",
-            countQuery = "select count(*) from products p where ((p.name like :param) or (p.index like :param))/* or (p.price like :param) or (c.amount like :param))*/",
+    List<Product> findByVegetableCentreId(@Param("centreId") Long centreId);
+
+    @Query(value = "select * from products p where ((p.name like :param) or (p.index like :param) and (vegetable_centre_id = :centreId)) /*or (p.price like :param) or (c.amount like :param))*/",
+            countQuery = "select count(*) from products p where ((p.name like :param) or (p.index like :param) and (vegetable_centre_id = :centreId))/* or (p.price like :param) or (c.amount like :param))*/",
             nativeQuery = true)
-    Page<Product> searchProduct(@Param("param") String param, Pageable pageable);
+    Page<Product> searchProduct(@Param("param") String param,
+                                @Param("centreId") Long centreId,
+                                Pageable pageable);
 
     @Modifying
     @Transactional

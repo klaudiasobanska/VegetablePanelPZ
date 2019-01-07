@@ -25,4 +25,7 @@ public class Warehouse implements Serializable {
 
     @Column(name = "address")
     private String address;
+
+    @Column(name = "vegetable_centre_id")
+    private Long vegetableCentreId;
 }

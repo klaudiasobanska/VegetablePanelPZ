@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.xsoftpont.panelv.exception.ResourceNotFoundException;
 import pl.xsoftpont.panelv.model.Product;
 import pl.xsoftpont.panelv.model.ProductMap;
+import pl.xsoftpont.panelv.model.Provider;
 import pl.xsoftpont.panelv.model.VAT_RATE;
 import pl.xsoftpont.panelv.repository.ProductRepository;
 
@@ -58,8 +59,10 @@ public class ProductController {
     }
 
     @GetMapping("/product/search")
-    public Page<Product> getProduct(@RequestParam("param") String param, Pageable pageable){
-        Page<Product> page = productRepository.searchProduct("%" + param + "%", pageable);
+    public Page<Product> getProduct(@RequestParam("param") String param,
+                                    @RequestParam("centreId") Long centreId,
+                                    Pageable pageable){
+        Page<Product> page = productRepository.searchProduct("%" + param + "%",centreId, pageable);
         page.forEach(p -> productMap.map(p));
         return page;
     }
@@ -75,6 +78,12 @@ public class ProductController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/product/vegetable")
+    public List<Product> getProductByVegetableCentre(@RequestParam("centreId") Long centreId){
+        List<Product> product = productRepository.findByVegetableCentreId(centreId);
+        product.forEach(p -> productMap.map(p));
+        return product;
+    }
 
 
 }

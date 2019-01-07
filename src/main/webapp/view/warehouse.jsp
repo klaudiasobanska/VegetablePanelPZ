@@ -13,10 +13,10 @@
     <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/18.1.4/css/dx.spa.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/18.1.4/css/dx.common.css" />
     <link rel="dx-theme" data-theme="generic.carmine" href="https://cdn3.devexpress.com/jslib/18.1.5/css/dx.carmine.css" />
-    <script src="/static/warehouse.js"></script>
-    <script src="/static/home.js"></script>
+    <script src="./static/warehouse.js"></script>
+    <script src="./static/home.js"></script>
     <script src="https://cdn3.devexpress.com/jslib/18.1.4/js/dx.all.js"></script>
-    <link rel="stylesheet" type="text/css" href="/static/styles.css" />
+    <link rel="stylesheet" type="text/css" href="./static/styles.css" />
 
 </head>
 <body class="dx-viewport allBackground" >

@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.xsoftpont.panelv.exception.ResourceNotFoundException;
 import pl.xsoftpont.panelv.model.Farmer;
+import pl.xsoftpont.panelv.model.FarmerDto;
+import pl.xsoftpont.panelv.model.VegetableCentre;
 import pl.xsoftpont.panelv.repository.FarmerRepository;
 
 import javax.validation.Valid;
@@ -17,6 +19,7 @@ public class FarmerController {
 
     @Autowired
     FarmerRepository farmerRepository;
+
 
     @RequestMapping("/farmer/all")
     public List<Farmer> findAll(){return farmerRepository.findAll();}
@@ -31,7 +34,7 @@ public class FarmerController {
 
     @PutMapping("/farmer/{id}")
     public Farmer updateFarmer(@PathVariable("id") Long id,
-                               @Valid @RequestBody Farmer farmerDetails){
+                               @Valid @RequestBody FarmerDto farmerDetails){
         Farmer farmer = farmerRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Farmer", "id", id));
 
@@ -47,8 +50,10 @@ public class FarmerController {
     }
 
     @GetMapping("/farmer/search")
-    public Page<Farmer> getFarmer(@RequestParam("p") String p, Pageable pageable){
-        Page<Farmer> page = farmerRepository.searchFarmer("%" + p + "%", pageable);
+    public Page<Farmer> getFarmer(@RequestParam("p") String p,
+                                  @RequestParam("centreId") Long centreId,
+                                  Pageable pageable){
+        Page<Farmer> page = farmerRepository.searchFarmer("%" + p + "%",centreId, pageable);
         return page;
     }
 
@@ -56,5 +61,10 @@ public class FarmerController {
     public ResponseEntity deleteFarmer(@RequestParam("id") Long id){
         farmerRepository.deleteFarmer(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/farmer/user")
+    public Farmer getFarmerByUser(@RequestParam("userId") Long userId){
+        return farmerRepository.findByUserId(userId);
     }
 }

@@ -13,10 +13,11 @@ public interface WarehouseRepository extends JpaRepository<Warehouse, Long> {
 
     List<Warehouse> findAll();
 
-    @Query(value = "select * from warehouses w where ((w.name like :param))",
-            countQuery = "select count(*) from warehouses w where ((w.name like :param))",
+    @Query(value = "select * from warehouses w where (w.name like :param) and (w.vegetable_centre_id = :centreId)",
+            countQuery = "select count(*) from warehouses w where (w.name like :param) and (w.vegetable_centre_id = :centreId)",
             nativeQuery = true)
-    List<Warehouse> searchWarehouse(@Param("param") String param);
+    List<Warehouse> searchWarehouse(@Param("param") String param,
+                                    @Param("centreId") Long centreId);
 
 
 }

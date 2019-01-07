@@ -39,6 +39,9 @@ public class Provider implements Serializable{
     @Column(name = "nip")
     private String nip;
 
+    @Column(name = "vegetable_centre_id")
+    private Long vegetableCentreId;
+
 
     public String getFullAddress(){
         //return city + " " + address;

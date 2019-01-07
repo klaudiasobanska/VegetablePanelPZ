@@ -17,13 +17,17 @@ public interface ProviderRepository  extends JpaRepository<Provider, Long> {
 
     List<Provider> findAll();
 
-    @Query(value = "select * from provider p where ((p.name like :p) or (p.city like :p) or (p.nip like :p))",
-            countQuery = "select count(*) from provider p where ((p.name like :p) or (p.city like :p) or (p.nip like :p))",
+    @Query(value = "select * from provider p where ((p.name like :p) or (p.city like :p) or (p.nip like :p) and (p.vegetable_centre_id = :centreId))",
+            countQuery = "select count(*) from provider p where ((p.name like :p) or (p.city like :p) or (p.nip like :p) and (p.vegetable_centre_id = :centreId))",
             nativeQuery = true)
-    Page<Provider> searchProvider(@Param("p") String p, Pageable pageable);
+    Page<Provider> searchProvider(@Param("p") String p,
+                                  @Param("centreId") Long centreId,
+                                  Pageable pageable);
 
     @Modifying
     @Transactional
     @Query("delete from Provider where id=:id")
     void deleteProvider(@Param("id") Long id);
+
+    List<Provider> findByVegetableCentreId(@Param("centreId") Long centreId);
 }

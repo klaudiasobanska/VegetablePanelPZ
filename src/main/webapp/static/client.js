@@ -1,6 +1,12 @@
+var userId;
+
+$.get('./users/current', function (data) {
+    userId = data.id;
+
+});
 $(function () {
 
-    showMenu(4);
+    showMenu(6);
 
     $("#searchBox").dxTextBox({
         placeholder: "Wyszukaj",
@@ -14,7 +20,7 @@ $(function () {
     $("#addButton").dxButton({
         icon: "add",
         onClick: function () {
-            //addOrEditClient(false);
+            addOrEditClient(false);
         }
     });
 
@@ -25,7 +31,7 @@ $(function () {
             if (dataGrid.getSelectedRowsData().length > 0) {
                 addOrEditClient(true);
                 clientRefresh();
-            }else{
+            } else {
                 $("#noSelectedRowToast").dxToast({
                     message: "Wiersz nie został wybrany",
                     type: "error",
@@ -44,7 +50,7 @@ $(function () {
             if (dataGrid.getSelectedRowsData().length > 0) {
                 deleteClient(true);
 
-            }else{
+            } else {
                 $("#noSelectedRowToast").dxToast({
                     message: "Wiersz nie został wybrany",
                     type: "error",
@@ -55,81 +61,87 @@ $(function () {
         }
 
     });
-
-    var clintDataSource = new DevExpress.data.DataSource({
-
-
-        load: function (loadOptions) {
-            var params = {
-                p: $("#searchBox").dxTextBox('instance').option('value')
-            };
-            var d = $.Deferred();
-            $.getJSON('/provider/search', {
-                p: params.p ? params.p : "",
-                page: loadOptions.skip / loadOptions.take,
-                size: loadOptions.take,
-                sort: sortString(loadOptions)
-            }).done(function (result) {
-                d.resolve(result.content, {
-                    totalCount: result.totalElements
-
-                });
-            });
-            return d.promise();
-        }
-    });
-
-
-    /*show grid with clients in clint page*/
-    $("#clientGrid").dxDataGrid({
-        dataSource: clintDataSource,
-        key: "id",
-        columnAutoWidth: true,
-        remoteOperations: {groupPaging: true},
-        selection: {
-            mode: "single"
-        },
-        scrolling: {
-            "showScrollbar": "never"
-        },
-        paging: {
-            pageSize: 3
-        },
-        pager: {
-            showPageSizeSelector: true,
-            allowedPageSizes: [3, 6, 12]
-        },
-        showBorders: true,
-
-        hoverStateEnabled: true,
-
-        columns: [{
-            caption: "Nazwa",
-            dataField: "name"
-        }, {
-            caption: "Miejscowość",
-            dataField: "city"
-        }, {
-            caption: "Adres",
-            dataField: "address"
-
-        },{
-            caption: "Email",
-            dataField: "email"
-
-        },{
-            caption: "Numer telefonu",
-            dataField: "phoneNumber",
-            width: 150
-
-        },{
-            caption: "NIP",
-            dataField: "nip"
-
-        }]
-    });
-
+    showClientGrid();
 });
+function showClientGrid(){
+    $.get('./vegetable/centre/user?userId='+userId, function (result) {
+        var clintDataSource = new DevExpress.data.DataSource({
+
+
+            load: function (loadOptions) {
+                var params = {
+                    p: $("#searchBox").dxTextBox('instance').option('value'),
+                    centreId: result.id
+                };
+                var d = $.Deferred();
+                $.getJSON('/client/search', {
+                    p: params.p ? params.p : "",
+                    centreId: params.centreId ? params.centreId:-1,
+                    page: loadOptions.skip / loadOptions.take,
+                    size: loadOptions.take,
+                    sort: sortString(loadOptions)
+                }).done(function (result) {
+                    d.resolve(result.content, {
+                        totalCount: result.totalElements
+
+                    });
+                });
+                return d.promise();
+            }
+        });
+
+
+        /*show grid with clients in clint page*/
+        $("#clientGrid").dxDataGrid({
+            dataSource: clintDataSource,
+            key: "id",
+            columnAutoWidth: true,
+            remoteOperations: {groupPaging: true},
+            selection: {
+                mode: "single"
+            },
+            scrolling: {
+                "showScrollbar": "never"
+            },
+            paging: {
+                pageSize: 3
+            },
+            pager: {
+                showPageSizeSelector: true,
+                allowedPageSizes: [3, 6, 12]
+            },
+            showBorders: true,
+
+            hoverStateEnabled: true,
+
+            columns: [{
+                caption: "Nazwa",
+                dataField: "name"
+            }, {
+                caption: "Miejscowość",
+                dataField: "city"
+            }, {
+                caption: "Adres",
+                dataField: "address"
+
+            }, {
+                caption: "Email",
+                dataField: "email"
+
+            }, {
+                caption: "Numer telefonu",
+                dataField: "phoneNumber",
+                width: 150
+
+            }, {
+                caption: "NIP",
+                dataField: "nip"
+
+            }]
+        });
+    });
+
+};
 
 function sortString(loadOptions) {
 
@@ -151,162 +163,168 @@ function sortString(loadOptions) {
 
 function addOrEditClient(editTrueFlag){
 
-    $("#addOrEditPopup").dxPopup({
-        height: 270,
-        width: 900
-    }).dxPopup("show");
+    var client = getClient();
 
-    var newClient = {
-        name: "",
-        city: "",
-        address:"",
-        email: "",
-        phoneNumber: "",
-        nip: ""};
+    $.get('./vegetable/centre/user?userId='+userId, function (result) {
 
-    if(editTrueFlag == true){
-        var client = getClient();
-
-        newClient.name = client.name;
-        newClient.city = client.city;
-        newClient.address = client.address;
-        newClient.email = client.email;
-        newClient.phoneNumber = client.phoneNumber;
-        newClient.nip = client.nip;
-    }else {
         $("#addOrEditPopup").dxPopup({
-            title: "Nowy Klient"
+            height: 270,
+            width: 900
+        }).dxPopup("show");
+
+        var newClient = {
+            name: "",
+            city: "",
+            address: "",
+            email: "",
+            phoneNumber: "",
+            nip: ""
+        };
+
+        if (editTrueFlag == true) {
+            newClient.name = client.name;
+            newClient.city = client.city;
+            newClient.address = client.address;
+            newClient.email = client.email;
+            newClient.phoneNumber = client.phoneNumber;
+            newClient.nip = client.nip;
+
+        } else {
+            $("#addOrEditPopup").dxPopup({
+                title: "Nowy Klient"
+            });
+            $("#addOrEditClientForm").val("");
+        }
+
+
+        $("#addOrEditClientForm").dxForm({
+            formData: newClient,
+            readOnly: false,
+            colCount: 2,
+            items: [{
+                dataField: "name",
+                label: {
+                    text: "Nazwa"
+                },
+                validationRules: [{
+                    type: "required",
+                    message: "Nazwa jest wymagana"
+                }]
+            }, {
+                dataField: "city",
+                label: {
+                    text: "Miejscowość"
+                },
+                validationRules: [{
+                    type: "required",
+                    message: "Miejscowość jest wymagana"
+                }]
+            }, {
+                dataField: "address",
+                label: {
+                    text: "Adres"
+                },
+                validationRules: [{
+                    type: "required",
+                    message: "Adres jest wymagany"
+                }]
+            }, {
+                dataField: "email",
+                label: {
+                    text: "Email"
+                },
+                validationRules: [{
+                    type: "required",
+                    message: "Email jest wymagany"
+                }, {
+                    type: "email",
+                    message: "Email jest niepoprawny"
+                }]
+            }, {
+                dataField: "phoneNumber",
+                label: {
+                    text: "Numer telefony"
+                },
+                validationRules: [{
+                    type: "required",
+                    message: "Numer telefonu jest wymagany"
+                }]
+            }, {
+                dataField: "nip",
+                label: {
+                    text: "NIP"
+                },
+                validationRules: [{
+                    type: "required",
+                    message: "NIP jest wymagany"
+                }]
+            }]
         });
-         $("#addOrEditClientForm").val("");
-    }
 
+        $("#saveClientButton").dxButton({
+            text: "Zapisz",
+            width: "100px",
+            onClick: function (e) {
 
-    $("#addOrEditClientForm").dxForm({
-        formData: newClient,
-        readOnly: false,
-        colCount: 2,
-        items: [{
-            dataField: "name",
-            label: {
-                text: "Nazwa"
-            },
-            validationRules: [{
-                type: "required",
-                message: "Nazwa jest wymagana"
-            }]
-        },{
-            dataField: "city",
-            label: {
-                text: "Miejscowość"
-            },
-            validationRules: [{
-                type: "required",
-                message: "Miejscowość jest wymagana"
-            }]
-        },{
-            dataField: "address",
-            label: {
-                text: "Adres"
-            },
-            validationRules: [{
-                type: "required",
-                message: "Adres jest wymagany"
-            }]
-        },{
-            dataField: "email",
-            label: {
-                text: "Email"
-            },
-            validationRules: [{
-                type: "required",
-                message: "Email jest wymagany"
-            },{
-                type: "email",
-                message: "Email jest niepoprawny"
-            }]
-        },{
-            dataField: "phoneNumber",
-            label: {
-                text: "Numer telefony"
-            },
-            validationRules: [{
-                type: "required",
-                message: "Numer telefonu jest wymagany"
-            }]
-        },{
-            dataField: "nip",
-            label: {
-                text: "NIP"
-            },
-            validationRules: [{
-                type: "required",
-                message: "NIP jest wymagany"
-            }]
-        }]
-    });
+                var f = $("#addOrEditClientForm").dxForm('instance');
+                var newName = f.getEditor('name').option('value');
+                var newCity = f.getEditor('city').option('value');
+                var newAddress = f.getEditor('address').option('value');
+                var newEmail = f.getEditor('email').option('value');
+                var newPhoneNumber = f.getEditor('phoneNumber').option('value');
+                var newNip = f.getEditor('nip').option('value');
 
-    $("#saveClientButton").dxButton({
-        text:"Zapisz",
-        width: "100px",
-        onClick: function (e) {
+                var ret = f.validate();
 
-            var f = $("#addOrEditClientForm").dxForm('instance');
-            var newName = f.getEditor('name').option('value');
-            var newCity = f.getEditor('city').option('value');
-            var newAddress = f.getEditor('address').option('value');
-            var newEmail = f.getEditor('email').option('value');
-            var newPhoneNumber = f.getEditor('phoneNumber').option('value');
-            var newNip = f.getEditor('nip').option('value');
+                if (ret.isValid) {
+                    newClient.name = newName;
+                    newClient.city = newCity;
+                    newClient.address = newAddress;
+                    newClient.email = newEmail;
+                    newClient.phoneNumber = newPhoneNumber;
+                    newClient.nip = newNip;
 
-            var ret = f.validate();
+                    newClient = JSON.stringify(newClient);
 
-            if (ret.isValid) {
-                newClient.name = newName;
-                newClient.city = newCity;
-                newClient.address = newAddress;
-                newClient.email = newEmail;
-                newClient.phoneNumber = newPhoneNumber;
-                newClient.nip = newNip;
+                    if (editTrueFlag) {
+                        $.ajax({
+                            url: './client/' + client.id,
+                            type: 'put',
+                            dataType: 'json',
+                            contentType: 'application/json',
+                            success: function (result) {
+                                clientRefresh();
+                            },
+                            data: newClient
+                        });
+                    } else {
 
-                newClient = JSON.stringify(newClient);
-
-                if (editTrueFlag) {
-                    $.ajax({
-                        url: './provider/' + client.id,
-                        type: 'put',
-                        dataType: 'json',
-                        contentType: 'application/json',
-                        success: function (result) {
-                            clientRefresh();
-                        },
-                        data: newClient
-                    });
-                } else {
-
-                    $.ajax({
-                        url: './provider/add',
-                        type: 'post',
-                        dataType: 'json',
-                        contentType: 'application/json',
-                        success: function () {
-                            clientRefresh();
-                        },
-                        data: newClient
-                    });
+                        $.ajax({
+                            url: './vegetable/add/client?centreId='+result.id,
+                            type: 'post',
+                            dataType: 'json',
+                            contentType: 'application/json',
+                            success: function () {
+                                clientRefresh();
+                            },
+                            data: newClient
+                        });
+                    }
+                    $("#addOrEditPopup").dxPopup("hide");
+                    showClientGrid();
                 }
+
+            }
+        });
+
+        $("#cancelClientButton").dxButton({
+            text: "Anuluj",
+            width: "100px",
+            onClick: function (e) {
                 $("#addOrEditPopup").dxPopup("hide");
             }
-
-        }
+        })
     });
-
-    $("#cancelClientButton").dxButton({
-        text:"Anuluj",
-        width: "100px",
-        onClick: function (e) {
-            $("#addOrEditPopup").dxPopup("hide");
-        }
-    })
 }
 
 
@@ -314,26 +332,28 @@ function deleteClient(){
 
     var client = getClient();
 
+    $.get('./vegetable/centre/user?userId='+userId, function (result) {
+        $.post('./vegetable/delete/client?clientId=' + client.id + "&centreId=" + result.id, function (result) {
+                if (result.errorMsg) {
+                    $("#errorDeleteToast").dxToast({
+                        message: "Nastąpił błąd w trakcie usuwania",
+                        type: "error",
+                        displayTime: 2000
+                    }).dxToast("show");
 
-    $.post('/provider/delete?id=' + client.id, function (result) {
-            if(result.errorMsg){
-                $("#errorDeleteToast").dxToast({
-                    message: "Nastąpił błąd w trakcie usuwania",
-                    type: "error",
-                    displayTime: 2000
-                }).dxToast("show");
+                } else {
+                    $("#okDeleteToast").dxToast({
+                        message: "Klient został poprawnie usunięty",
+                        type: "success",
+                        displayTime: 2000
+                    }).dxToast("show");
+                    clientRefresh();
 
-            } else {
-                $("#okDeleteToast").dxToast({
-                    message: "Klient został poprawnie usunięty",
-                    type: "success",
-                    displayTime: 2000
-                }).dxToast("show");
-                clientRefresh();
 
+                }
             }
-        }
-    )
+        )
+    });
 }
 
 function clientRefresh(){

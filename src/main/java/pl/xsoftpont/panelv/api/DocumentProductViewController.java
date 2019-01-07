@@ -28,8 +28,9 @@ public class DocumentProductViewController {
     @GetMapping("view/document/product/search")
     public Page<DocumentProductView> getDocumentProduct(@RequestParam("warehouseId") Long warehouseId,
                                                         @RequestParam(value = "docDate", required = false) String docDate,
+                                                        @RequestParam("centreId") Long centreId,
                                                         Pageable pageable) {
-        Page<DocumentProductView> page = documentProductViewRepository.searchDocumentProduct(warehouseId, StringUtils.isEmpty(docDate)?"":docDate, pageable);
+        Page<DocumentProductView> page = documentProductViewRepository.searchDocumentProduct(warehouseId, StringUtils.isEmpty(docDate)?"":docDate,centreId, pageable);
         return page;
     }
 }

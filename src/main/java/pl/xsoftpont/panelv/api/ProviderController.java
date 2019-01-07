@@ -47,8 +47,10 @@ public class ProviderController {
     }
 
     @GetMapping("/provider/search")
-    public Page<Provider> getProvider(@RequestParam("p") String p, Pageable pageable){
-        Page<Provider> page = providerRepository.searchProvider("%" + p + "%", pageable);
+    public Page<Provider> getProvider(@RequestParam("p") String p,
+                                      @RequestParam("centreId") Long centreId,
+                                      Pageable pageable){
+        Page<Provider> page = providerRepository.searchProvider("%" + p + "%",centreId, pageable);
         return page;
     }
 
@@ -56,5 +58,10 @@ public class ProviderController {
     public ResponseEntity deleteProvider(@RequestParam("id") Long id){
         providerRepository.deleteProvider(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/provider/vegetable")
+    public List<Provider> getProviderByVegetableCentre(@RequestParam("centreId") Long centreId){
+        return providerRepository.findByVegetableCentreId(centreId);
     }
 }

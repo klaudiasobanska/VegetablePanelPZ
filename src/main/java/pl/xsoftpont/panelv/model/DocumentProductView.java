@@ -56,6 +56,9 @@ public class DocumentProductView implements Serializable {
     @Column(name = "unit_name")
     private String unitName;
 
+    @Column(name = "vegetable_centre_id")
+    private Long vegetableCentreId;
+
 }
 
 

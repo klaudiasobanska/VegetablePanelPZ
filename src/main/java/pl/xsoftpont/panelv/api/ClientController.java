@@ -7,6 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.xsoftpont.panelv.exception.ResourceNotFoundException;
 import pl.xsoftpont.panelv.model.Client;
+import pl.xsoftpont.panelv.model.ClientDto;
+import pl.xsoftpont.panelv.model.Farmer;
+import pl.xsoftpont.panelv.model.Provider;
 import pl.xsoftpont.panelv.repository.ClientRepository;
 
 import javax.validation.Valid;
@@ -31,7 +34,7 @@ public class ClientController {
 
     @PutMapping("/client/{id}")
     public Client updateClient(@PathVariable("id") Long id,
-                               @Valid @RequestBody Client clientDetails){
+                               @Valid @RequestBody ClientDto clientDetails){
         Client client = clientRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Client", "id", id));
 
@@ -47,8 +50,10 @@ public class ClientController {
     }
 
     @GetMapping("/client/search")
-    public Page<Client> getClient(@RequestParam("p") String p, Pageable pageable){
-        Page<Client> page = clientRepository.searchClient("%" + p + "%", pageable);
+    public Page<Client> getClient(@RequestParam("p") String p,
+                                  @RequestParam("centreId") Long centreId,
+                                  Pageable pageable){
+        Page<Client> page = clientRepository.searchClient("%" + p + "%",centreId, pageable);
         return page;
     }
 
@@ -57,4 +62,11 @@ public class ClientController {
         clientRepository.deleteClient(id);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/client/user")
+    public Client getFClientByUser(@RequestParam("userId") Long userId){
+        return clientRepository.findByUserId(userId);
+    }
+
+
 }

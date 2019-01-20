@@ -1,12 +1,12 @@
-var menuData = [{
+var menuData = [/*{
     id: 1,
     name: "Home"
-}, {
-    id: 2,
+},*/ {
+    id: 1,
     name: "Skupy"
 
 }, {
-    id: 3,
+    id: 2,
     name: "Kontrakty"
 }];
 

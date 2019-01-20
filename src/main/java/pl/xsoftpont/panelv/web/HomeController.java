@@ -25,10 +25,10 @@ public class HomeController extends AbstractController {
         session.setAttribute("user", user);
 
         if(user.getRole() == 2){
-            return "farmerHome";
+            return "farmerCentre";
         }
         if(user.getRole() == 3){
-            return "clientHome";
+            return "clientCentre";
         }
         return "home";
 

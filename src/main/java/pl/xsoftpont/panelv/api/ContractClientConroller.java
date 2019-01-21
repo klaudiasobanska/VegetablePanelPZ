@@ -88,4 +88,9 @@ public class ContractClientConroller {
         page.forEach(pa -> contractClientMap.map(pa));
         return page;
     }
+
+    @GetMapping("/client/contract/vegetable")
+    public List<ContractClient> getCbyV(@RequestParam("vegetableId") Long vegetableId){
+        return contractClientRepository.findByVegetableCentreId(vegetableId);
+    }
 }

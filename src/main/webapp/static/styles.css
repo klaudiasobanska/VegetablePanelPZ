@@ -1,7 +1,7 @@
 .allBackground{
     background: RGB(222, 225, 227);
 }
-#clientGrid, #farmerGrid, #providerGrid, #contractCGrid, #contractFGrid  {
+#clientGrid, #farmerGrid, #providerGrid, #contractCGrid, #contractFGrid, #settFGrid, #settCGrid,#settClientGrid, #settFarmerGrid  {
     position:absolute;
     top:21%;
     left:5%;

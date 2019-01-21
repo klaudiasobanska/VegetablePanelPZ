@@ -3,17 +3,22 @@ package pl.xsoftpont.panelv.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.xsoftpont.panelv.exception.ResourceNotFoundException;
-import pl.xsoftpont.panelv.model.ContractSettlementClient;
+import pl.xsoftpont.panelv.model.*;
 import pl.xsoftpont.panelv.repository.ContractSettlementClientRepository;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @RestController
-public class ContractSettlementClientController {
+public class ContractSettlementClientController extends AbstractController{
 
     @Autowired
     ContractSettlementClientRepository contractSettlementClientRepository;
+
+    @Autowired
+    SettlementClientMap settlementClientMap;
+
 
     @RequestMapping("contract/settlement/client/all")
     public List<ContractSettlementClient> findAll(){return contractSettlementClientRepository.findAll();}
@@ -41,6 +46,39 @@ public class ContractSettlementClientController {
 
         ContractSettlementClient updatedContractSettlementClient = contractSettlementClientRepository.save(contractSettlementClient);
         return updatedContractSettlementClient;
+    }
+
+    @GetMapping("/client/sett")
+    public List<ContractSettlementClient> getSett(@RequestParam("clientId") Long clientId){
+        List<ContractSettlementClient> contractSettlementClients = contractSettlementClientRepository.findSett(clientId);
+        contractSettlementClients.forEach(f->settlementClientMap.map(f));
+        return contractSettlementClients;
+    }
+
+    @PostMapping("/client/sett/update")
+    public Map<String, Object> updateStt(@RequestParam("id") Long id,
+                                         @RequestParam("status") Integer status){
+        contractSettlementClientRepository.endSett(id,status);
+        return simpleOkResult();
+    }
+
+    @GetMapping("/status/sett/all")
+    public  List<Map<String,Object>> status(){
+
+        return SettlementStatus.settlementStatusToList();
+    }
+
+    @GetMapping("/client/sett/vegetable")
+    public List<ContractSettlementClient> getSettV(@RequestParam("vegetableId") Long vegetableId){
+        List<ContractSettlementClient> contractSettlementClients = contractSettlementClientRepository.findSettV(vegetableId);
+        contractSettlementClients.forEach(f->settlementClientMap.map(f));
+        return contractSettlementClients;
+    }
+
+    @PostMapping("/sett/user/delete")
+    public Map<String, Object> deleteSettF(@RequestParam("id") Long id){
+        contractSettlementClientRepository.deleteSettC(id);
+        return simpleOkResult();
     }
 
 }

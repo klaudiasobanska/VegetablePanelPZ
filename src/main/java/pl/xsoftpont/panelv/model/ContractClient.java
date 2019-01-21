@@ -54,6 +54,9 @@ public class ContractClient implements Serializable {
     @Column(name = "price")
     private Integer price;
 
+    @Column(name = "lp")
+    private Integer lp;
+
     @Transient
     private String clientName;
 

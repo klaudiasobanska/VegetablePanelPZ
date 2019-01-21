@@ -12,9 +12,9 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
-@Table(name = "contracts_settlement_clients")
+@Table(name = "contracts_settlement_farmers")
 @EntityListeners(AuditingEntityListener.class)
-public class ContractSettlementClient implements Serializable {
+public class ContractSettlementFarmer implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CONTRACTS_SETTLEMENT_CLIENTS_ID_SEQ")
@@ -26,7 +26,7 @@ public class ContractSettlementClient implements Serializable {
     private Integer contractId;
 
     @Column(name = "amount")
-    private Double amount;
+    private Integer amount;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Poland")
     @Column(name = "date")
@@ -43,4 +43,8 @@ public class ContractSettlementClient implements Serializable {
 
     @Transient
     private Integer lp;
+
+
+
+
 }

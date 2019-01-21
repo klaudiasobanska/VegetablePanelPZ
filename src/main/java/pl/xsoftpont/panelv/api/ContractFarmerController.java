@@ -83,4 +83,11 @@ public class ContractFarmerController  {
         page.forEach(pa -> contractFarmerMap.map(pa));
         return page;
     }
+
+    @GetMapping("farmer/get/contract")
+    public List<ContractFarmer> getContractFarmer(@RequestParam("farmerId") Long farmerId){
+        List<ContractFarmer> contractFarmers = contractFarmerRepository.findContractFarmerByFarmerId(farmerId);
+        contractFarmers.forEach(c-> contractFarmerMap.map(c));
+        return contractFarmers;
+    }
 }

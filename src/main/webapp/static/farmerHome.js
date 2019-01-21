@@ -1,14 +1,16 @@
 var menuData = [
-   /* id: 1,
-    name: "Home"
-}*/ {
-    id: 1,
-    name: "Skupy"
+   {
+        id: 1,
+        name: "Skupy"
 
-}, {
-    id: 2,
-    name: "Kontrakty"
-}];
+    }, {
+        id: 2,
+        name: "Kontrakty"
+    },
+    {
+        id: 3,
+        name: "Rozliczenia"
+    }];
 
 
 function showMenuFarmer(page) {
@@ -33,8 +35,8 @@ function showMenuFarmer(page) {
                 case 2:
                     location.href = './fcontract';
                     break;
-                /*case 1:
-                    location.href = './fhome';*/
+                case 3:
+                    location.href = './fsett';
 
             }
         }

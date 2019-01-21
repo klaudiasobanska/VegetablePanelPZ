@@ -1,0 +1,226 @@
+var userId;
+
+$.get('./users/current', function (data) {
+    userId = data.id;
+
+});
+
+$(function () {
+
+    showMenuClient(3);
+
+
+    $("#editButton").dxButton({
+        icon: "edit",
+        onClick: function () {
+            var dataGrid = $("#settCGrid").dxDataGrid("instance");
+            if (dataGrid.getSelectedRowsData().length > 0) {
+                addOrEditSettC(true);
+                settCRefresh();
+            } else {
+                $("#noSelectedRowToast").dxToast({
+                    message: "Wiersz nie został wybrany",
+                    type: "error",
+                    displayTime: 2000
+                }).dxToast("show");
+
+            }
+        }
+    });
+
+
+    showSettCGrid();
+});
+
+function showSettCGrid(){
+
+    $.get('./client/user?userId='+userId, function (result) {
+
+        var settFDataSource = new DevExpress.data.DataSource({
+
+
+            load: function () {
+                var params = {
+                    p: result.id
+                };
+                var d = $.Deferred();
+                $.getJSON('./client/sett', {
+                    clientId: params.p ? params.p : -1,
+
+                }).done(function (r) {
+                    d.resolve(r);
+                });
+                return d.promise();
+            }
+        });
+
+
+        $("#settCGrid").dxDataGrid({
+            dataSource: settFDataSource,
+            key: "id",
+            columnAutoWidth: true,
+            selection: {
+                mode: "single"
+            },
+            scrolling: {
+                "showScrollbar": "never"
+            },
+            showBorders: true,
+            hoverStateEnabled: true,
+            columns: [{
+                caption: "Numer kontraktu",
+                dataField: "lp"
+            }, {
+                caption: "Data",
+                dataField: "date"
+            }, {
+                caption: "Ilość",
+                dataField: "amount"
+
+            }, {
+                caption: "Cena",
+                dataField: "price"
+
+            }, {
+                caption: "Status",
+                dataField: "statusName"
+
+            }]
+        });
+    })
+
+};
+
+function getContract(){
+    var dataGrid = $("#settCGrid").dxDataGrid("instance");
+    if (dataGrid.getSelectedRowsData().length > 0) {
+        return dataGrid.getSelectedRowsData()[0];
+    } else {
+        console.log("Nie wybrano");
+    }
+}
+
+
+
+function settCRefresh() {
+
+    var dataSource = $("#settCGrid").dxDataGrid("getDataSource");
+    dataSource.reload();
+    var dataGridInstance = $("#settCGrid").dxDataGrid("instance");
+    dataGridInstance.clearSelection();
+
+}
+
+function addOrEditSettC(editTrueFlag) {
+
+    var contract = getContract();
+
+    $.get('./client/user?userId='+userId, function (result) {
+
+
+        $("#addOrEditPopup").dxPopup({
+            height: 250,
+            width: 900
+        }).dxPopup("show");
+
+        var newSettC = {
+            date:"",
+            amount:"",
+            contractId:"",
+            status:"",
+            lp:""
+        };
+
+        if (editTrueFlag == true) {
+
+            newSettC .date = contract.date;
+            newSettC .amount = contract.amount;
+            newSettC .contractId = contract.contractId;
+            newSettC .status = contract.status;
+            newSettC .lp=contract.lp;
+
+        }
+
+
+        $("#addOrEditSettCForm").dxForm({
+            formData: newSettC ,
+            readOnly: false,
+            colCount: 2,
+            items: [{
+                dataField: "contractId",
+                label: {
+                    text: "Kontrakt"
+                },
+                editorOptions: {
+                    disabled: true
+                }
+            },{
+                dataField: "date",
+                editorType: "dxDateBox",
+                value: contract.date,
+                editorOptions: {
+                    disabled:true
+                }
+            },{
+                dataField: "amount",
+                label: {
+                    text: "Ilość"
+                },
+                editorOptions: {
+                    disabled:true
+                }
+            },{
+                dataField: "status",
+                editorType: "dxSelectBox",
+                label: {
+                    text: "Status"
+                },
+                validationRules: [{
+                    type: "required",
+                    message: "Statu jest wymagany"
+                }],
+                editorOptions: {
+                    dataSource: "./status/sett/all",
+                    displayExpr: 'name',
+                    valueExpr: 'id',
+                    value: contract.status,
+                    showClearButton: false,
+                    searchEnabled: true
+                }
+            }]
+        });
+
+        $("#saveSettCButton").dxButton({
+            text: "Zapisz",
+            width: "100px",
+            onClick: function (e) {
+
+                var f = $("#addOrEditSettCForm").dxForm('instance');
+                var ret = f.validate();
+
+                if (ret.isValid) {
+                        $.ajax({
+                            url: './client/sett/update?id=' + contract.id +"&status="+ f.getEditor('status').option('value'),
+                            type: 'post',
+                            dataType: 'json',
+                            contentType: 'application/json',
+                            success: function () {
+                                settCRefresh();
+                            },
+                        });
+                    }
+                    $("#addOrEditPopup").dxPopup("hide");
+                }
+
+        });
+
+        $("#cancelSettCButton").dxButton({
+            text: "Anuluj",
+            width: "100px",
+            onClick: function (e) {
+                $("#addOrEditPopup").dxPopup("hide");
+            }
+        });
+    })
+
+}

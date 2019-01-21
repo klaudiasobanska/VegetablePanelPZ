@@ -36,6 +36,9 @@ public class ContractFarmer implements Serializable {
     @Column(name = "end_date")
     private Date endDate;
 
+    @Column(name = "lp")
+    private Integer lp;
+
     @Column(name = "amount")
     private Integer amount;
 

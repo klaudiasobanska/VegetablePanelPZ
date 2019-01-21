@@ -119,6 +119,9 @@ function showContractFGrid(){
             hoverStateEnabled: true,
 
             columns: [{
+                caption: "Lp",
+                dataField: "lp"
+            },{
                 caption: "Farmer",
                 dataField: "farmerName"
             }, {

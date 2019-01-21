@@ -37,4 +37,7 @@ public interface ContractClientRepository extends JpaRepository<ContractClient, 
     @Transactional
     @Query("delete from ContractClient where id=:id")
     void deleteContractC(@Param("id") Long id);
+
+
+   List<ContractClient> findByVegetableCentreId(@Param("vegetableId") Long vegetableId);
 }

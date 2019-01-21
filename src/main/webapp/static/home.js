@@ -28,6 +28,16 @@ var menuData = [{
         id:9,
         name: "Klient"
     }]
+},{
+    id:10,
+    name: "Rozliczenia",
+    items: [{
+        id:11,
+        name: "Rolnik"
+    },{
+        id:12,
+        name: "Klient"
+    }]
 }];
 
 
@@ -70,6 +80,14 @@ function showMenu(page) {
                     break;
                 case 9:
                     location.href = './contractC';
+                    break;
+                case 10:
+                    break;
+                case 11:
+                    location.href = './settF';
+                    break;
+                case 12:
+                    location.href = './settC';
                     break;
                 case 1:
                     location.href = './home';

@@ -37,4 +37,8 @@ public interface ContractFarmerRepository extends JpaRepository<ContractFarmer, 
             nativeQuery = true)
     Page<ContractFarmer> searchFarmerContract(@Param("param") String param,
                                               @Param("farmerId") Long farmerId, Pageable pageable);
+
+
+
+    List<ContractFarmer>findContractFarmerByFarmerId(@Param("farmerId") Long farmerId);
 }

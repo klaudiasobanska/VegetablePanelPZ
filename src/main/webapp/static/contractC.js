@@ -120,6 +120,9 @@ function showContractGrid(){
             hoverStateEnabled: true,
 
             columns: [{
+                caption: "Lp",
+                dataField: "lp"
+            },{
                 caption: "Klient",
                 dataField: "clientName"
             }, {

@@ -8,6 +8,9 @@ var menuData = [/*{
 }, {
     id: 2,
     name: "Kontrakty"
+},{
+    id: 3,
+    name: "Rozliczenia"
 }];
 
 
@@ -34,8 +37,8 @@ function showMenuClient(page) {
                 case 2:
                     location.href = './contract';
                     break;
-                /*case 1:
-                    location.href = './home';*/
+                case 3:
+                    location.href = './csett';
 
             }
         }
